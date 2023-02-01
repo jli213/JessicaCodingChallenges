@@ -34,23 +34,23 @@ public class GradeCalculatorController {
     	double courseGrade = 0.0;
     	
     	String projectGrade = projectGradeTextField.getText();
-    	courseGrade = Double.parseDouble(projectGrade)*0.5;
+    	courseGrade = Double.parseDouble(projectGrade)*0.4;
     	System.out.println("Project grade entered: " + projectGrade +
     			" Course grade so far: " + courseGrade);
     	
     	
     	double quizGrade = quizSlider.getValue();
-    	courseGrade += quizGrade*10*0.25;
+    	courseGrade += quizGrade*10*0.3;
     	System.out.println("Quiz grade entered: " + quizGrade +
     			" Course grade so far: " + courseGrade);
     	int requiredCodingChallengesPassed = requiredCodingChallengesChoiceBox.getValue();
-    	courseGrade += (requiredCodingChallengesPassed*100/15)*0.25*15/20;
+    	courseGrade += (requiredCodingChallengesPassed*100/15)*0.3*15/20;
     	System.out.println("Required coding challenges passed: " + requiredCodingChallengesPassed +
     			" Course grade so far: " + courseGrade);
     	
     	
     	int optionalCodingChallengesPassed = optionalCodingChallengesChoiceBox.getValue();
-    	courseGrade += (optionalCodingChallengesPassed*100/5)*0.25*5/20;
+    	courseGrade += (optionalCodingChallengesPassed*100/5)*0.3*5/20;
     	System.out.println("Optional coding challenges passed: " + optionalCodingChallengesPassed +
     			" Course grade so far: " + courseGrade);
     	
