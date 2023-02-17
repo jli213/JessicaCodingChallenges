@@ -3,12 +3,19 @@ package application;
 
 
 
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class GradeCalculatorController {
-	
+	Stage applicationStage;
+	double averageQuizGrade = 0.0;
 
     @FXML
     private TextField projectGradeTextField;
@@ -20,7 +27,7 @@ public class GradeCalculatorController {
     private ChoiceBox<Integer> optionalCodingChallengesChoiceBox;
 
     @FXML
-    private Slider quizSlider;
+    private ChoiceBox<Integer> requiredQuizzesChoiceBox;
     
     @FXML
     private Label courseGradeLabel;
@@ -82,6 +89,49 @@ public class GradeCalculatorController {
     	
     	return projectGrade;
     }
+    
+    void calculateQuizGrade(Scene mainScene, ArrayList<TextField> quizGradeTextFields )
+    {
+    	averageQuizGrade = 0;
+    	for(TextField textfield:quizGradeTextFields) {
+    		averageQuizGrade += Double.parseDouble(textfield.getText());
+    		
+    	}
+    	averageQuizGrade = averageQuizGrade/quizGradeTextFields.size();
+    	
+    	applicationStage.setScene(mainScene);
+    }
+    
+    @FXML
+    void getQuizGrades(ActionEvent enterQuizGradesEvent) {
+    	Scene mainScene =  applicationStage.getScene();
+    	
+    	int numberOfQuizzes = requiredQuizzesChoiceBox.getValue();
+    	int rowCounter = 0;
+    	VBox allRows = new VBox();
+    	ArrayList<TextField> quizTextFields = new ArrayList<TextField>();
+    	while(rowCounter<numberOfQuizzes) {
+    		rowCounter++;
+    		HBox quizRow = new HBox();
+    		
+        	Label quizLabel = new Label("Quiz " + rowCounter +" grade");
+        	TextField quizGradeTextField = new TextField();
+        	quizTextFields.add(quizGradeTextField);
+        	quizRow.getChildren().addAll(quizLabel,quizGradeTextField);        	
+        	
+        	allRows.getChildren().add(quizRow);
+    	}
+    	Button doneButton = new Button("Done");
+    	doneButton.setOnAction(doneEvent -> calculateQuizGrade(mainScene, quizTextFields));
+    	allRows.getChildren().add(doneButton);
+    	
+    	
+    	Scene quizScene = new Scene(allRows);
+    	applicationStage.setScene(quizScene);
+    }
+    
+    
+    
     @FXML
     void calculateGrade(ActionEvent event) {
     	projectGradeErrorLabel.setText("");
@@ -98,7 +148,7 @@ public class GradeCalculatorController {
     			" Course grade so far: " + courseGrade);
     	
     	//calculate course grade when quiz grade weighs 0.3
-    	double quizGrade = quizSlider.getValue();
+    	double quizGrade = averageQuizGrade;
     	courseGrade += quizGrade*10*0.3;
     	System.out.println("Quiz grade entered: " + quizGrade +
     			" Course grade so far: " + courseGrade);
