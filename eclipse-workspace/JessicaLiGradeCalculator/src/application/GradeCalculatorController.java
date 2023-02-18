@@ -4,6 +4,7 @@ package application;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -103,12 +104,14 @@ public class GradeCalculatorController {
     void calculateOptionalQuizGrade(Scene mainScene, ArrayList<TextField> quizGradeTextFields )
     {
     	optionalQuizAverageGrade = 0;
+    	double quizGrade;
     	for(TextField textfield:quizGradeTextFields) {
-    		optionalQuizAverageGrade += Double.parseDouble(textfield.getText());
-    		
+    		quizGrade = Double.parseDouble(textfield.getText());
+    		optionalQuizAverageGrade += quizGrade;
+    			
     	}
-    	optionalQuizAverageGrade = optionalQuizAverageGrade/quizGradeTextFields.size();
-    	
+    	optionalQuizAverageGrade = optionalQuizAverageGrade/5;
+
     	applicationStage.setScene(mainScene);
     	optionalQuizAverageGradeLabel.setText(Double.toString(optionalQuizAverageGrade));
     }
@@ -151,7 +154,7 @@ public class GradeCalculatorController {
     		requiredQuizAverageGrade += Double.parseDouble(textfield.getText());
     		
     	}
-    	requiredQuizAverageGrade = requiredQuizAverageGrade/quizGradeTextFields.size();
+    	requiredQuizAverageGrade = requiredQuizAverageGrade/15;
     	
     	applicationStage.setScene(mainScene);
     	requiredQuizAverageGradeLabel.setText(Double.toString(requiredQuizAverageGrade));
@@ -209,16 +212,16 @@ public class GradeCalculatorController {
     	
     	//calculate course grade when quiz grade weighs 0.3
     	double requiredQuizGrade = requiredQuizAverageGrade;
-    	courseGrade += requiredQuizGrade*10*(15/20)*0.3;
+    	courseGrade += (requiredQuizGrade*10)*0.3*15/20;
     	System.out.println("Quiz grade entered: " + requiredQuizGrade +
     			" Course grade so far: " + courseGrade);
     	double optionalQuizGrade = optionalQuizAverageGrade;
-    	courseGrade += optionalQuizGrade*10*(5/20)*0.3;
+    	courseGrade += (optionalQuizGrade*10)*0.3*5/20;
     	System.out.println("Quiz grade entered: " + optionalQuizGrade +
     			" Course grade so far: " + courseGrade);
     	
     	
-    	//calculate course grade when total coding challenges weighs 0.3
+    	//calculate course grade when total coding challenges weigh+s 0.3
     	int requiredCodingChallengesPassed = requiredCodingChallengesChoiceBox.getValue();
     	courseGrade += (requiredCodingChallengesPassed*100/15)*0.3*15/20;
     	System.out.println("Required coding challenges passed: " + requiredCodingChallengesPassed +
