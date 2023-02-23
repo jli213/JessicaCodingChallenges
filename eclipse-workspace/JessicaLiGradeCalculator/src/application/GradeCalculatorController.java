@@ -4,7 +4,6 @@ package application;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,7 +49,7 @@ public class GradeCalculatorController {
      * Checks if the value provided is a valid project grade. A project grade must be numeric and 
      * a percentage(between 0 and 100) and it can be a real number(having digits). 
      * If valid, the equivalent double is returned, if not this method returns a zero.
-     * 
+     * a
      * @param valueEntered the value entered as the project grade
      * @return the double value of valueEntered if it is numeric and a valid percentage and 0 otherwise
      */
@@ -201,36 +200,63 @@ public class GradeCalculatorController {
     	double courseGrade = 0.0;
     	
     	String projectValueEntered = projectGradeTextField.getText();
+    	Grade projectGrade  = new Grade();
     	
-    	//use function and return project grade
-    	double projectGrade = getProjectGrade(projectValueEntered);
-    	//calculate course grade when project grade weighs 0.4
-    	courseGrade = projectGrade*0.4;
+    	projectGrade.weight = 0.4;
+    	projectGrade.maxValue = 100;
+    	String errorMessage = projectGrade.setValue(projectValueEntered);
+    	projectGradeErrorLabel.setText(errorMessage);
     	
-    	System.out.println("Project grade entered: " + projectGrade +
+    	
+    	Grade requiredQuizGrade = new Grade();
+    	requiredQuizGrade.value = requiredQuizAverageGrade;
+    	requiredQuizGrade.maxValue = 10;
+    	requiredQuizGrade.weight = 0.3* 15/20;
+    	
+    	
+    	Grade optionalQuizGrade = new Grade();
+    	optionalQuizGrade.value = requiredQuizAverageGrade;
+    	optionalQuizGrade.maxValue = 10;
+    	optionalQuizGrade.weight = 0.3* 5/20;
+    	
+    	Grade requiredCodingChallenges = new Grade();
+    	requiredCodingChallenges.value = requiredQuizAverageGrade;
+    	requiredCodingChallenges.maxValue = 15;
+    	requiredCodingChallenges.weight = 0.3* 15/20;
+    	
+    	Grade optionalCodingChallenges = new Grade();
+    	optionalCodingChallenges.value = requiredQuizAverageGrade;
+    	optionalCodingChallenges.maxValue = 5;
+    	optionalCodingChallenges.weight = 0.3* 5/20;
+    	
+    	
+    	courseGrade = projectGrade.getWeightedPercentageValue();
+    	System.out.println("Project grade entered: " + projectGrade.value +
     			" Course grade so far: " + courseGrade);
     	
-    	//calculate course grade when quiz grade weighs 0.3
-    	double requiredQuizGrade = requiredQuizAverageGrade;
-    	courseGrade += (requiredQuizGrade*10)*0.3*15/20;
-    	System.out.println("Quiz grade entered: " + requiredQuizGrade +
+    
+    	courseGrade += (requiredQuizGrade.getWeightedPercentageValue());
+    	System.out.println("Quiz grade entered: " + requiredQuizGrade.value +
     			" Course grade so far: " + courseGrade);
-    	double optionalQuizGrade = optionalQuizAverageGrade;
-    	courseGrade += (optionalQuizGrade*10)*0.3*5/20;
-    	System.out.println("Quiz grade entered: " + optionalQuizGrade +
+    	
+    	optionalQuizGrade.value = optionalQuizAverageGrade;
+    	courseGrade += optionalQuizGrade.getWeightedPercentageValue();
+    	System.out.println("Quiz grade entered: " + optionalQuizGrade.value +
     			" Course grade so far: " + courseGrade);
     	
     	
     	//calculate course grade when total coding challenges weigh+s 0.3
-    	int requiredCodingChallengesPassed = requiredCodingChallengesChoiceBox.getValue();
-    	courseGrade += (requiredCodingChallengesPassed*100/15)*0.3*15/20;
-    	System.out.println("Required coding challenges passed: " + requiredCodingChallengesPassed +
+    	requiredCodingChallenges.value = requiredCodingChallengesChoiceBox.getValue();
+    	System.out.println(requiredQuizGrade.value);
+    	courseGrade += requiredCodingChallenges.getWeightedPercentageValue();
+    	System.out.println("Required coding challenges passed: " + requiredCodingChallenges.value +
     			" Course grade so far: " + courseGrade);
     	
     	//calculate course grade when total coding challenges weighs 0.3
-    	int optionalCodingChallengesPassed = optionalCodingChallengesChoiceBox.getValue();
-    	courseGrade += (optionalCodingChallengesPassed*100/5)*0.3*5/20;
-    	System.out.println("Optional coding challenges passed: " + optionalCodingChallengesPassed +
+    	optionalCodingChallenges.value = optionalCodingChallengesChoiceBox.getValue();
+    	System.out.println(optionalQuizGrade.value);
+    	courseGrade += optionalQuizGrade.getWeightedPercentageValue();
+    	System.out.println("Optional coding challenges passed: " + optionalCodingChallenges.value +
     			" Course grade so far: " + courseGrade);
     	
     	courseGradeLabel.setText(String.format("Your overall course grade is: %.2f", courseGrade));
