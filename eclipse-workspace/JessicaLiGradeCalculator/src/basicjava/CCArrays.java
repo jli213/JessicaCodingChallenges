@@ -1,6 +1,8 @@
 package basicjava;
 
 import java.util.Arrays;
+import java.text.Collator;
+
 
 public class CCArrays {
 
@@ -19,6 +21,7 @@ public class CCArrays {
 
 	public static void sortAlphabetic(String[] strs) {
 		// TODO Auto-generated method stub
+		Arrays.sort(strs, Collator.getInstance());
 		
 	}
 
