@@ -17,7 +17,10 @@ public class CCArrayList {
 
 	public static void insert(ArrayList<Double> nums, double d, int i) {
 		// TODO Auto-generated method stub
-		
+		if(i<nums.size()) {
+			nums.add(i, d);
+		}
+
 	}
 	
 
