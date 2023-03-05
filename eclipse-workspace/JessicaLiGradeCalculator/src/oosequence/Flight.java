@@ -30,8 +30,14 @@ public class Flight {
 	}
 
 	public long length() {
-		// TODO Auto-generated method stub
-		return 0;
+		long time;
+		if(arrival == null || departure == null) {
+			return 0;
+		}
+		else {
+			time = arrival.getTime() - departure.getTime();
+		}
+		return time/60000;
 	}
 
 }
