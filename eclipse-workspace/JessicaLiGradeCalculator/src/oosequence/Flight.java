@@ -8,7 +8,20 @@ public class Flight {
 	public Date arrival;
 
 	public Flight(Date departureTime, Date arrivalTime) {
-		// TODO Auto-generated constructor stub
+		if(departureTime == null || arrivalTime == null) {
+			departure = departureTime;
+			arrival = arrivalTime;
+		}
+		else {
+			if(departureTime.before(arrivalTime)) {
+				departure = departureTime;
+				arrival = arrivalTime;
+			}
+			else {
+				departure = null;
+				arrival = null;
+			}
+		}
 	}
 
 	public Flight(Flight c) {
