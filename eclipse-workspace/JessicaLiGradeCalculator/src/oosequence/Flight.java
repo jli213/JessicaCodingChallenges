@@ -24,8 +24,9 @@ public class Flight {
 		}
 	}
 
-	public Flight(Flight c) {
-		// TODO Auto-generated constructor stub
+	public Flight(Flight toCopy) {
+		departure = toCopy.departure;
+		arrival = toCopy.arrival;
 	}
 
 	public long length() {
