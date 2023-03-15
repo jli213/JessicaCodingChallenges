@@ -49,7 +49,14 @@ public class Itinerary {
 
 	public long getTotalLayover() {
 		// TODO Auto-generated method stub
-		return 0;
+		long arrival,departure,layover=0;
+		for(int i=0;i<flights.size()-1;i++) {
+			arrival = flights.get(i).getArrival().getTime();
+			departure =  flights.get(i+1).getDeparture().getTime();
+			layover += departure - arrival;
+		}
+		layover = layover/60000;
+		return layover;
 	}
 
 	public String getName() {
