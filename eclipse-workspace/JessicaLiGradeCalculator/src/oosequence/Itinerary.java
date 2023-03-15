@@ -1,5 +1,7 @@
 package oosequence;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 
 public class Itinerary {
@@ -16,34 +18,34 @@ public class Itinerary {
 	public void addFlight(Flight flightToAdd) {
 		// TODO Auto-generated method stub
 		int size = flights.size();
+		int index = 0;
 		if(flights.isEmpty()) {
 			flights.add(flightToAdd);
 		}
 		else {
 			for(int j=0;j<size;j++) {
-				if(j==size-1){
-					if (flightToAdd.getArrival().after(flights.get(j).getArrival())) {
-						if(flightToAdd.getDeparture().after(flights.get(j).getArrival())){
-							flights.add(j, flightToAdd);
-						}
-					}
-					if (flightToAdd.getArrival().after(flights.get(j).getArrival())) {
-						if(flightToAdd.getDeparture().after(flights.get(j).getArrival())){
-							flights.add(j, flightToAdd);
-						}
-					}
+				if(flights.get(j).getArrival().after(flightToAdd.getArrival())) {
+					flights.add(j, flightToAdd);
+					index = j;
+					break;
 				}
-				else if(flights.get(j).getArrival().after(flightToAdd.getArrival())) {
-					if(flights.get(j-1).getDeparture().after(flightToAdd.getArrival())){
-						if(flightToAdd.getDeparture().after(flights.get(j).getArrival())) {
-							flights.add(j, flightToAdd);
-						}
-					} 
+				else if((j==size-1)&&((flightToAdd.getArrival().after(flights.get(j).getArrival())))){
+						flights.add(flightToAdd);
+						index = j;
+				}
+			}
+			size = flights.size();
+			for(int i=0;i<size-2;i++) {
+					if(flights.get(i).getArrival().after(flights.get(i+1).getDeparture())){
+							flights.remove(index);
 				}
 			}
 		}
-		
+        
 	}
+		
+		
+
 
 	public long getTotalLayover() {
 		// TODO Auto-generated method stub
