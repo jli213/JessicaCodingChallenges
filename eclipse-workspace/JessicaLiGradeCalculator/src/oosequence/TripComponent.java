@@ -7,18 +7,18 @@ public class TripComponent {
 	private Date start = null;
 	private Date end = null;
 
-	public TripComponent(Date startTime, Date endTime) {
-		if(startTime == null || endTime == null) {
-			start = startTime;
-			end = endTime;
+	public TripComponent(Date startDate, Date endDate) {
+		if(startDate == null || endDate == null) {
+			start = startDate;
+			end = endDate;
 		}
 		else {
-			if(startTime.before(endTime)) {
-				start = startTime;
-				end = endTime;
+			if(startDate.before(endDate)) {
+				start = startDate;
+				end = endDate;
 			}
 			else {
-				start = startTime;
+				start = startDate;
 				end = null;
 			}
 		}
