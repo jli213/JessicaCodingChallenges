@@ -35,25 +35,22 @@ public class TripComponent {
 		// TODO Auto-generated constructor stub
 	}
 
-	public long lengthInSeconds() {
-		long time;
-		if(end == null || start == null) {
-			return 0;
+
+	public String getEnd() {
+		// TODO Auto-generated method stub
+		if(end == null) {
+			return "";
 		}
-		else {
-			time = end.getTime() - start.getTime();
-		}
-		return time/1000;
+		
+		return end.toString();
 	}
 
-	public Date getEnd() {
+	public String getStart() {
 		// TODO Auto-generated method stub
-		return end;
-	}
-
-	public Date getStart() {
-		// TODO Auto-generated method stub
-		return start;
+		if(start == null) {
+			return "";
+		}
+		return start.toString();
 	}
 	
 	public void setStart(Date startTime) {
@@ -79,6 +76,45 @@ public class TripComponent {
 			}
 		}
 	}
+	
+
+	public long lengthInSeconds() {
+		long time;
+		if(end == null || start == null) {
+			return 0;
+		}
+		else {
+			time = end.getTime() - start.getTime();
+		}
+		return time/1000;
+	}
+
+	public boolean overlapsWith(TripComponent otherComponent) {
+		// TODO Auto-generated method stub
+		if(otherComponent.start == null || otherComponent.end== null||
+				end == null || start == null) { 
+			return false;
+		}
+		if(end.getTime()>otherComponent.start.getTime()
+				&& end.getTime()<otherComponent.end.getTime()) {
+			return true;
+			
+		}
+		else if(start.getTime()>otherComponent.start.getTime()
+				&& start.getTime()<otherComponent.end.getTime()) {
+			return true;
+			
+		}
+		else if(start.getTime()<otherComponent.start.getTime()
+				&& otherComponent.end.getTime()< end.getTime()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	
 
 
 
