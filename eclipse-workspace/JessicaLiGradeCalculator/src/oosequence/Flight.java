@@ -1,9 +1,22 @@
 package oosequence;
 
+import java.util.Date;
+
 public class Flight extends TripComponent {
-	private String departureAirport = null;
-	private String arrivalAirport = null;
+	private String departureAirport = "";
+	private String arrivalAirport = "";
 	
+	public Flight(Date departureTime, Date arrivalTime, String departureAirportName, String arrivalAirportName) {
+		super(departureTime,arrivalTime);
+		setDepartureAirport(departureAirportName);
+		setArrivalAirport(arrivalAirportName);
+	}
+	public Flight(Flight toCopy) {
+		// TODO Auto-generated constructor stub
+		super(toCopy);
+		departureAirport = toCopy.departureAirport;
+		arrivalAirport = toCopy.arrivalAirport;
+	}
 	public String getDepartureAirport() {
 		return departureAirport;
 	}
@@ -39,6 +52,13 @@ public class Flight extends TripComponent {
 		return Long.toString(length)+" minutes";
 	}
 	
+	public String getStart() {
+		return departureAirport+" "+super.getStart();
+	}
+	
+	public String getEnd(){
+		return arrivalAirport+" "+super.getEnd();
+	}
 	
 
 }
