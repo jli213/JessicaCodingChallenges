@@ -5,39 +5,38 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 
 public class Itinerary {
+	String name = "";
+	private ArrayList<TripComponent> tripComponents;
 	
-	private ArrayList<Flight> flights;
-	private String name = null;
-
 	public Itinerary(String nameString) {
 		name = nameString;
-		flights = new ArrayList<Flight>();
+		tripComponents = new ArrayList<TripComponent>();
 		// TODO Auto-generated constructor stub
 	}
 
-	public void addFlight(Flight flightToAdd) {
+	public void addTripComponent(TripComponent component) {
 		// TODO Auto-generated method stub
-		int size = flights.size();
+		int size = tripComponents.size();
 		int index = 0;
-		if(flights.isEmpty()) {
-			flights.add(flightToAdd);
+		if(tripComponents.isEmpty()) {
+			tripComponents.add(component);
 		}
 		else {
 			for(int j=0;j<size;j++) {
-				if(flights.get(j).getArrival().after(flightToAdd.getArrival())) {
-					flights.add(j, flightToAdd);
+				if(component.isBefore(tripComponents.get(j))) {
+					tripComponents.add(j, component);
 					index = j;
 					break;
 				}
-				else if((j==size-1)&&((flightToAdd.getArrival().after(flights.get(j).getArrival())))){
-						flights.add(flightToAdd);
+				else if((j==size-1)&&(tripComponents.get(j).isBefore(component))){
+						tripComponents.add(component);
 						index = j;
 				}
 			}
-			size = flights.size();
+			size = tripComponents.size();
 			for(int i=0;i<size-2;i++) {
-					if(flights.get(i).getArrival().after(flights.get(i+1).getDeparture())){
-							flights.remove(index);
+					if(tripComponents.get(i).overlapsWith(tripComponents.get(i+1))){
+							tripComponents.remove(index);
 				}
 			}
 		}
@@ -46,27 +45,24 @@ public class Itinerary {
 		
 		
 
-
-	public long getTotalLayover() {
-		// TODO Auto-generated method stub
-		long arrival,departure,layover=0;
-		for(int i=0;i<flights.size()-1;i++) {
-			arrival = flights.get(i).getArrival().getTime();
-			departure =  flights.get(i+1).getDeparture().getTime();
-			layover += departure - arrival;
-		}
-		layover = layover/60000;
-		return layover;
-	}
-
 	public String getName() {
 		// TODO Auto-generated method stub
 		return name;
 	}
 	
-	public ArrayList<Flight> getFlights() {
+	public ArrayList<TripComponent> getTripComponents() {
 		// TODO Auto-generated method stub
-		return flights;
+		return tripComponents;
+	}
+	
+	public String toString() {
+		String stringOfTripComponent = name+"\n";
+		for(int i =0; i<tripComponents.size();i++) {
+//			String numString = Integer.toString(i);
+//			stringOfTripComponent.concat(numString);
+			stringOfTripComponent = stringOfTripComponent.concat(i+"\t"+tripComponents.get(i).getStart()+"\t"+tripComponents.get(i).getEnd()+"\n");
+		}
+		return stringOfTripComponent;
 	}
 	
 

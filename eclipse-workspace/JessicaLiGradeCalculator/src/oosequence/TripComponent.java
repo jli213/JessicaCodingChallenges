@@ -78,7 +78,7 @@ public class TripComponent {
 	}
 	
 
-	public long lengthInSeconds() {
+	protected long lengthInSeconds() {
 		long time;
 		if(end == null || start == null) {
 			return 0;
@@ -88,8 +88,17 @@ public class TripComponent {
 		}
 		return time/1000;
 	}
+	
+	protected boolean isBefore(TripComponent otherComponent) {
+		if(start.before(otherComponent.start)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
-	public boolean overlapsWith(TripComponent otherComponent) {
+	protected boolean overlapsWith(TripComponent otherComponent) {
 		// TODO Auto-generated method stub
 		if(otherComponent.start == null || otherComponent.end== null||
 				end == null || start == null) { 

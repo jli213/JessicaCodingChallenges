@@ -46,11 +46,10 @@ public class Flight extends TripComponent {
 		}
 	} 
 	
-	public String getDuration() {
-		Long length = lengthInSeconds();
-		length = length/60;
-		return Long.toString(length)+" minutes";
-	}
+	/*
+	 * public String getDuration() { Long length = lengthInSeconds(); length =
+	 * length/60; return Long.toString(length)+" minutes"; }
+	 */
 	
 	public String getStart() {
 		return departureAirport+" "+super.getStart();
