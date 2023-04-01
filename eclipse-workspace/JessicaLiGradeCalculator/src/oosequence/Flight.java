@@ -1,44 +1,95 @@
 package oosequence;
 
-public class Flight extends TripComponent {
-	private String departureAirport = null;
-	private String arrivalAirport = null;
-	
-	public String getDepartureAirport() {
-		return departureAirport;
-	}
-	public void setDepartureAirport(String airport) {
-		if(airport == null) {
-			departureAirport = "";
+import java.util.Date;
+
+public class Flight {
+
+	private Date departure = null;
+	private Date arrival = null;
+
+	public Flight(Date departureTime, Date arrivalTime) {
+		if(departureTime == null && arrivalTime == null) {
+			departure = null;
+			arrival = null;
 		}
-		else if(airport.length() == 3) {
-			this.departureAirport = airport;
+		else if(departureTime == null) {
+			departure = null;
+			arrival = new Date(arrivalTime.getTime());
 		}
-		else {
-			departureAirport = "";
-		}
-	}
-	public String getArrivalAirport() {
-		return arrivalAirport;
-	}
-	public void setArrivalAirport(String airport) {
-		if(airport == null) {
-			arrivalAirport = "";
-		}
-		else if(airport.length() == 3) {
-			this.arrivalAirport = airport;
+		else if(arrivalTime == null) {
+			departure = new Date(departureTime.getTime());
+			arrival = null;
 		}
 		else {
-			arrivalAirport = "";
+			if(departureTime.before(arrivalTime)) {
+				departure = new Date(departureTime.getTime());
+				arrival = new Date(arrivalTime.getTime());
+			}
+			else {
+				departure = null;
+				arrival = null;
+			}
 		}
-	} 
-	
-	public String getDuration() {
-		Long length = lengthInSeconds();
-		length = length/60;
-		return Long.toString(length)+" minutes";
+	}
+
+	public Flight(Flight toCopy) {
+		departure = toCopy.departure;
+		arrival = toCopy.arrival;
+	}
+
+	public long length() {
+		long time;
+		if(arrival == null || departure == null) {
+			return 0;
+		}
+		else {
+			time = arrival.getTime() - departure.getTime();
+		}
+		return time/60000;
+	}
+
+	public Date getDeparture() {
+		// TODO Auto-generated method stub
+		if(departure == null) {
+			return null;
+		}
+		else {
+			return new Date(departure.getTime());
+		}
+	}
+
+	public Date getArrival() {
+		// TODO Auto-generated method stub
+		if(arrival == null) {
+			return null;
+		}
+		else {
+			return new Date(arrival.getTime());
+		}
 	}
 	
-	
+	public void setDeparture(Date departureTime) {
+		// TODO Auto-generated method stub
+		if(departureTime == null ||arrival == null) {
+			departure = new Date(departureTime.getTime());
+		}
+		else {
+			if(departureTime.before(arrival)) {
+				departure = new Date(departureTime.getTime());
+			}
+		}
+	}
+
+	public void setArrival(Date arrivalTime) {
+		// TODO Auto-generated method stub
+		if(arrivalTime == null || departure == null) {
+			arrival = new Date(arrivalTime.getTime());
+		}
+		else {
+			if(departure.before(arrivalTime)) {
+				arrival = new Date(arrivalTime.getTime());
+			}
+		}
+	}
 
 }

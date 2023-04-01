@@ -64,7 +64,8 @@ public class Itinerary {
 		return name;
 	}
 	
-	public ArrayList<Flight> getFlights() {
+
+	public ArrayList<Flight> getFlightList() {
 		// TODO Auto-generated method stub
 		return flights;
 	}
