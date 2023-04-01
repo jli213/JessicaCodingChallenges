@@ -33,8 +33,22 @@ public class Flight {
 	}
 
 	public Flight(Flight toCopy) {
-		departure = toCopy.departure;
-		arrival = toCopy.arrival;
+		if(toCopy.departure == null && toCopy.arrival == null) {
+			departure = null;
+			arrival = null;
+		}
+		else if(toCopy.departure == null) {
+			departure = null;
+			arrival = new Date (toCopy.arrival.getTime());
+		}
+		else if(toCopy.arrival == null) {
+			departure = new Date (toCopy.departure.getTime());
+			arrival = null;
+		}
+		else {
+			departure = new Date (toCopy.departure.getTime());
+			arrival = new Date (toCopy.arrival.getTime());
+		}
 	}
 
 	public long length() {

@@ -17,20 +17,21 @@ public class Itinerary {
 
 	public void addFlight(Flight flightToAdd) {
 		// TODO Auto-generated method stub
+		Flight flightToAddCopy = new Flight(flightToAdd);
 		int size = flights.size();
 		int index = 0;
 		if(flights.isEmpty()) {
-			flights.add(flightToAdd);
+			flights.add(flightToAddCopy);
 		}
 		else {
 			for(int j=0;j<size;j++) {
-				if(flights.get(j).getArrival().after(flightToAdd.getArrival())) {
-					flights.add(j, flightToAdd);
+				if(flights.get(j).getArrival().after(flightToAddCopy.getArrival())) {
+					flights.add(j, flightToAddCopy);
 					index = j;
 					break;
 				}
-				else if((j==size-1)&&((flightToAdd.getArrival().after(flights.get(j).getArrival())))){
-						flights.add(flightToAdd);
+				else if((j==size-1)&&((flightToAddCopy.getArrival().after(flights.get(j).getArrival())))){
+						flights.add(flightToAddCopy);
 						index = j;
 				}
 			}
@@ -43,9 +44,6 @@ public class Itinerary {
 		}
         
 	}
-		
-		
-
 
 	public long getTotalLayover() {
 		// TODO Auto-generated method stub
