@@ -108,7 +108,7 @@ public class GradeCalculatorController {
 			} catch (InvalidGradeException ige) {
 				quizGradeErrorLabel.setText(ige.getMessage());
 				Grade quizGrade = new Grade(0,10,weightOfEachQuiz);
-				optionalQuizAverageGrade += quizGrade.getWeightedPercentageValue();
+				noErrors = false;
 			}
 			
 		//	String errorMessage =  quizGrade.setValue(textfield.getText());
@@ -171,7 +171,7 @@ public class GradeCalculatorController {
 			} catch (InvalidGradeException ige) {
 				quizGradeErrorLabel.setText(ige.getMessage());
 				Grade quizGrade = new Grade(0,10,weightOfEachQuiz);
-				requiredQuizAverageGrade += quizGrade.getWeightedPercentageValue();
+				noErrors = false;
 			}
 //			String errorMessage =  quizGrade.setValue(textfield.getText());
 //			if(!errorMessage.equals("")) {
@@ -248,24 +248,9 @@ public class GradeCalculatorController {
 
 		} catch (InvalidGradeException ige) {
 			projectGradeErrorLabel.setText(ige.getMessage());
-			Grade projectGrade = new Grade(0,100,0.4);
-			Grade requiredQuizGrade = new Grade(requiredQuizAverageGrade,10,0.3 * 15 / 20);
-
-			Grade optionalQuizGrade = new Grade(optionalQuizAverageGrade,10,0.3 * 5 / 20);
-
-			Grade requiredCodingChallenges = new Grade(requiredCodingChallengesChoiceBox.getValue(),15,0.3 * 15 / 20);
-
-			Grade optionalCodingChallenges = new Grade(optionalCodingChallengesChoiceBox.getValue(),5,0.3 * 5 / 20);
-
+			Grade projectGrade = new Grade(0,100,0.4);	 
+			courseGradeLabel.setText(String.format("invalid project grade"));
 			
-			courseGrade = projectGrade.getWeightedPercentageValue()
-				  +requiredQuizGrade.getWeightedPercentageValue()
-				  +optionalQuizGrade.getWeightedPercentageValue()
-				  +requiredCodingChallenges.getWeightedPercentageValue()
-				  +optionalCodingChallenges.getWeightedPercentageValue();
-			courseGradeLabel.setText(String.format("Your overall course grade is: %.2f", courseGrade));
-			 
-
 		}
 //		String errorMessage = projectGrade.setValue(projectValueEntered);
 //		projectGradeErrorLabel.setText(errorMessage);
