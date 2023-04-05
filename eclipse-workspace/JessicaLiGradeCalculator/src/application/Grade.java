@@ -23,6 +23,31 @@ public class Grade {
 		weight = weightTowardsCourseGrade;
 	}
 	
+//	public Grade(String gradeValue, int maxGradeValue, double weightTowardsCourseGrade) throws InvalidGradeException {
+//		int counter = 0;
+//		for (char c : gradeValue.toCharArray()) {
+//			if(!Character.isDigit(c)) {
+//			
+//				if(c =='.') {
+//        			if(counter==0)
+//        			{
+//        				counter +=1;
+//        				validGrade = true;
+//        			}
+//    			}
+//			}
+//		}
+//		
+//		try {
+//			Double.parseDouble(gradeValue);
+//		} catch (Exception e) {
+//			throw new InvalidGradeException("Invalid grade value.Can not convert string to double");
+//		}
+		
+		
+		
+	
+
 	/**
 	 * used for calculating the weighted percentage value of grades
 	 * @return the weighted percentage value of grades
@@ -32,18 +57,14 @@ public class Grade {
 	}
 	
 	//actions
-	/**
-	 * checks if the value entered is a valid digit and percentage and is between 0 and its maximum grade value
-	 * returns a error message if grade is invalid, if not converts the grade value to a double
-	 * @param valueAsString a string that contains the grade value
-	 * @return errorMessage the error message when grade is invalid if grade is valid it returns an empty string
-	 */
-	String setValue(String valueAsString) {
+
+	public Grade(String gradeValue, int maxGradeValue, double weightTowardsCourseGrade) throws InvalidGradeException{
+		maxValue = maxGradeValue;
+		weight = weightTowardsCourseGrade;
     	boolean validGrade = true;
     	int counter =0; //set counter of number of character decimal to 0
-    	String errorMessage = "";
     	
-    	for (char c : valueAsString.toCharArray()) {
+    	for (char c : gradeValue.toCharArray()) {
     		if(!Character.isDigit(c)) {
     			//if any number is not a digit or is not a real number, set flag to false, it is not a number
     			validGrade = false;
@@ -57,8 +78,8 @@ public class Grade {
     			}
     			if(!validGrade)
 				{
-					errorMessage = String.format("Don't include the character %c." +  
-        					" Project Grade should be percentage." , c);
+    				throw new InvalidGradeException(String.format("Don't include the character %c." +  
+        					" Project Grade should be percentage." , c));
 				}
     		}
     	}
@@ -69,19 +90,24 @@ public class Grade {
     	
     	if(validGrade)
     	{
-    		value = Double.parseDouble(valueAsString);	
+    		System.out.println("grade value"+gradeValue);
+    		value = Double.parseDouble(gradeValue);	
+    		System.out.println(value);
     	}
-    	
     	//Check if user entered a percentage grade. If not, display error message and  
     	//don't include project grade in course grade
     	if (value<0 || value > maxValue)
     	{
-    		errorMessage =String.format("Grade should be between 0 and %d. Invalid grade: %.02f",maxValue, value); 
-    				
     		value = 0;
-    	}
-    	return errorMessage; 
-	
+    		throw new InvalidGradeException(String.format("Grade should be between 0 and %d. Invalid grade: %.02f",maxValue, value)); 
+    	} 
 	}
+
+	public double getWeightedPercentageGrade() {
+		// TODO Auto-generated method stub
+		return value *100 *weight /maxValue;
+	}
+
+
 	
 }
